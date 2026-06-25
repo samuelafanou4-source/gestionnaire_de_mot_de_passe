@@ -68,3 +68,12 @@ def update_password(entry_id: int, item: PasswordItem):
             fake_db[index] = updated_entry
             return updated_entry
         raise HTTPException(status_code=404, detail="Entrée introuvable")
+
+# 4. DELETE : Supprimer un compte
+@app.delete("/passwords/{entry_id}")
+def delete_password(entry_id: int):
+    for index, entry in enumerate(fake_db):
+        if entry["id"] == entry_id:
+            fake_db.pop(index)
+        return {"message": f"Les identifiants pour {entry['site_name']} ont été supprimés."}
+    raise HTTPException(status_code=404, detail="Entrée introuvable")
