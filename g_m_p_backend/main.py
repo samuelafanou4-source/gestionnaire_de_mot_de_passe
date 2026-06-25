@@ -54,8 +54,8 @@ def get_password(entry_id: int):
     raise HTTPException(status_code=404, detail="Entrée introuvable")
 
 # 3. UPDATE : Modifier un compte (Changer le mot de passe ou l'user)
-@app.put("/passwords/{entry_id}", response_model=PasswordResponse)
-def update_password(entry_id: int, item: PasswordItem):
+@app.put("/passwords/{entry_id}", response_model=passwordResponse)
+def update_password(entry_id: int, item: passwordItem):
     for index, entry in enumerate(fake_db):
         if entry["id"] == entry_id:
             updated_entry = {
