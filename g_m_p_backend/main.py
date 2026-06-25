@@ -28,11 +28,11 @@ def create_password(item: passwordItem):
 
     # Éviter les doublons pour un même site
     for entry in fake_db:
-        if entry["site_name"].lower() == item.site_name.lower():
+        if entry["nom_site"].lower() == item.nom_site.lower():
             raise HTTPException(status_code=400, detail="Un mot de passe existe déjà pour ce site")
         new_entry = {
         "id": id_counter,
-        "site_name": item.site_name,
+        "nom_site": item.nom_site,
         "username": item.username,
         "password": item.password  # Reçu directement du client
     }
@@ -60,7 +60,7 @@ def update_password(entry_id: int, item: passwordItem):
         if entry["id"] == entry_id:
             updated_entry = {
                 "id": entry_id,
-                "site_name": item.site_name,
+                "nom_site": item.nom_site,
                 "username": item.username,
                 "password": item.password # Mis à jour avec la nouvelle valeur fournie
             }
@@ -75,5 +75,5 @@ def delete_password(entry_id: int):
     for index, entry in enumerate(fake_db):
         if entry["id"] == entry_id:
             fake_db.pop(index)
-        return {"message": f"Les identifiants pour {entry['site_name']} ont été supprimés."}
+        return {"message": f"Les identifiants pour {entry['nom_site']} ont été supprimés."}
     raise HTTPException(status_code=404, detail="Entrée introuvable")
