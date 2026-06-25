@@ -39,3 +39,16 @@ def create_password(item: passwordItem):
     fake_db.append(new_entry)
     id_counter += 1
     return new_entry
+
+# 2. READ : Récupérer tous les comptes stockés
+@app.get("/passwords", response_model=List[passwordResponse])
+def get_all_passwords():
+    return fake_db
+
+# 2b. READ : Récupérer un compte spécifique par son ID
+@app.get("/passwords/{entry_id}", response_model=passwordResponse)
+def get_password(entry_id: int):
+    for entry in fake_db:
+        if entry["id"] == entry_id:
+            return entry
+    raise HTTPException(status_code=404, detail="Entrée introuvable")
